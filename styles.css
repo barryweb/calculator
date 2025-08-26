@@ -1,0 +1,53 @@
+*, 
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	margin: 6rem;
+	min-width: 400px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+#container {
+	display: flex;
+	flex-direction: column;
+	height: 50vh;
+	min-height: 500px;
+	width: 20vw;
+	min-width: 350px;
+	margin: 20px 0px;
+	padding: 10px;
+	background-color: #a2a09f;
+
+}
+
+#display-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	height: 8vh;
+	min-height: 70px;
+}
+
+#content {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	flex-grow: 1;
+	margin-top: 12px;
+}
+
+.btn {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex: 1 0 100px;
+	min-width: 100px;
+	font-size: 3rem;
+}
