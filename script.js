@@ -1,6 +1,7 @@
 let numberA = "";
 let numberB = "";
 let operator = null;
+let evaluated = false;
 
 const display = document.querySelector(".display");
 const buttons = document.querySelectorAll(".btn");
@@ -64,6 +65,14 @@ buttons.forEach((button) => {
 
 		if (button.classList.contains("number")) {
 
+			if (evaluated) {
+				
+				numberA = "";
+				numberB = "";
+				operator = null;
+				evaluated = false;
+			}
+
 			if (!operator) {
 
 				displayNumberA(numSymbValue);
@@ -94,7 +103,7 @@ buttons.forEach((button) => {
 
 				if (operator && numberB !== "") {
 					
-					updateDisplayResult(numberA, numberB, numSymbValue);
+					updateDisplayResult(numberA, numberB, operator);
 				}
 				operator = assignOperator(button, numSymbValue);
 				return;
@@ -108,8 +117,46 @@ buttons.forEach((button) => {
 
 				if (operator && numberB !== "") {
 					updateDisplayResult(numberA, numberB, operator);
+					operator = null;
+					evaluated = true;
 				}
-			}
+
+			} else if (button.classList.contains("all-clear")) {
+
+				numberA = "";
+				numberB = "";
+				operator = null;
+				evaluated = false;
+				display.textContent = "0";
+
+			} else if (button.classList.contains("backspace")) {
+
+				if (operator && numberB !== "") {
+
+					numberB = numberB.toString().slice(0, -1);
+					display.textContent = numberB || "0";
+				} else {
+
+					numberA = numberA.toString().slice(0, -1);
+					display.textContent = numberA || "0";
+				}
+			} else if (button.classList.contains("decimal")) {
+
+				if (!operator) {
+
+					if (!numberA.includes(".")) {
+
+						numberA = numberA === "" ? "0." : numberA + ".";
+						display.textContent = numberA;
+					}
+				} else {
+
+					if (!numberB.includes(".")) {
+						numberB = numberB === "" ? "0." : numberB + ".";
+						display.textContent = numberB;
+					}
+				}
+			} 
 	})
 })
 
