@@ -57,6 +57,7 @@ function operate(a, b, calculate) {
 	return calculate(a, b);
 }
 
+
 buttons.forEach((button) => {
 
 	button.addEventListener("click", (e) => {
@@ -106,10 +107,11 @@ buttons.forEach((button) => {
 					updateDisplayResult(numberA, numberB, operator);
 				}
 				operator = assignOperator(button, numSymbValue);
+				evaluated = false;
 				return;
 			}
 
-			display.textContent = numberA;
+			display.textContent = formatDisplay(numberA);
 			numberB = "";
 			operator = null;
 
@@ -156,20 +158,22 @@ buttons.forEach((button) => {
 						display.textContent = numberB;
 					}
 				}
-			} 
-	})
-})
+			}
+			
+			display.textContent = formatDisplay(display.textContent);
+	});
+});
 
 function displayNumberA(value) {
 
 	numberA += value;
-	display.textContent = numberA;
+	display.textContent = formatDisplayString(numberA);
 }
 
 function displayNumberB(value) {
 
 	numberB += value;
-	display.textContent = numberB;
+	display.textContent = formatDisplayString(numberB);
 }
 
 function assignOperator(button, value) {
@@ -188,5 +192,25 @@ function updateDisplayResult(a, b, calculate) {
 	result = roundToTwoDecimals(result);
 	numberA = result;
 	numberB = "";
-	display.textContent = result;
+	display.textContent = formatDisplay(result);
+}
+
+function formatDisplay(num) {
+
+	if (typeof num === "number") {
+
+		const [integerPart, decimalPart] = num.toString().split(".");
+		return decimalPart ? integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "." +
+		decimalPart : integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+	return num;
+}
+
+function formatDisplayString(numStr) {
+  if (numStr === "") return "0";
+  if (numStr.includes(".")) {
+    const [integerPart, decimalPart] = numStr.split(".");
+    return integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "." + decimalPart;
+  }
+  return numStr.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
