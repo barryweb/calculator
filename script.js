@@ -184,10 +184,9 @@ function assignOperator(button, value) {
 
 function updateDisplayResult(a, b, calculate) {
 
-	const result = operate(Number(a), Number(b), calculate)
+	let result = operate(Number(a), Number(b), calculate);
+	result = roundToTwoDecimals(result);
 	numberA = result;
 	numberB = "";
 	display.textContent = result;
 }
-
-
