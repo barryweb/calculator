@@ -54,4 +54,11 @@ body {
 
 .display {
 	font-size: 3.5rem;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.display.shrink {
+	font-size: 2.5rem;
 }
