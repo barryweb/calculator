@@ -130,6 +130,7 @@ buttons.forEach((button) => {
 				operator = null;
 				evaluated = false;
 				display.textContent = "0";
+				display.classList.remove("shrink");
 
 			} else if (button.classList.contains("backspace")) {
 
