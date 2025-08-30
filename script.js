@@ -166,14 +166,18 @@ buttons.forEach((button) => {
 
 function displayNumberA(value) {
 
+	if (numberA.length >= 13) return;
 	numberA += value;
 	display.textContent = formatDisplayString(numberA);
+	shrinkDisplay(numberA);
 }
 
 function displayNumberB(value) {
 
+	if (numberB.length >= 13) return;
 	numberB += value;
 	display.textContent = formatDisplayString(numberB);
+	shrinkDisplay(numberB);
 }
 
 function assignOperator(button, value) {
@@ -193,6 +197,7 @@ function updateDisplayResult(a, b, calculate) {
 	numberA = result;
 	numberB = "";
 	display.textContent = formatDisplay(result);
+	shrinkDisplay(result);
 }
 
 function formatDisplay(num) {
@@ -207,10 +212,22 @@ function formatDisplay(num) {
 }
 
 function formatDisplayString(numStr) {
+
   if (numStr === "") return "0";
   if (numStr.includes(".")) {
     const [integerPart, decimalPart] = numStr.split(".");
     return integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "." + decimalPart;
   }
   return numStr.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function shrinkDisplay(val) {
+
+	if (val.toString().length > 13) {
+		
+		display.classList.add("shrink");
+	} else {
+
+		display.classList.remove("shrink");
+	}
 }
