@@ -23,6 +23,8 @@ body {
 	min-width: 450px;
 	margin: 20px 0px;
 	padding: 10px;
+	border: 3px outset #d1d1d1;
+	border-radius: 10px;
 }
 
 #display-wrapper {
@@ -31,6 +33,7 @@ body {
 	justify-content: flex-end;
 	height: 8vh;
 	min-height: 70px;
+	border: 4px inset #d1d1d1;
 }
 
 #content {
