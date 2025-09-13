@@ -6,57 +6,6 @@ let evaluated = false;
 const display = document.querySelector(".display");
 const buttons = document.querySelectorAll(".btn");
 
-function add(a, b) {
-	return a + b;
-}
-
-function subtract(a, b) {
-	return a - b;
-}
-
-function divide(a, b) {
-
-	if (a === 0 && b === 0) {
-		return "Result is undefined";
-	}
-	if (b === 0) {
-		return "Cannot divide by zero"
-	}
-	return a / b;
-}
-
-function multiply(a, b) {
-	return a * b;
-}
-
-function returnExponent(a, b) {
-	return Math.pow(a, b);
-}
-
-function returnSqrt(a) {
-	return Math.sqrt(a);
-}
-
-function returnPI() {
-	return Math.PI;
-}
-
-function applyPercent(a) {
-	return a / 100;
-}
-
-function toggleSign(a) {
-	return a * -1;
-}
-
-function roundToTwoDecimals(result) {
-	return parseFloat(result.toFixed(2));
-}
-
-function operate(a, b, calculate) {
-	return calculate(a, b);
-}
-
 
 buttons.forEach((button) => {
 
@@ -118,9 +67,11 @@ buttons.forEach((button) => {
 			} else if (button.classList.contains("equals")) {
 
 				if (operator && numberB !== "") {
+
 					updateDisplayResult(numberA, numberB, operator);
 					operator = null;
 					evaluated = true;
+					
 				}
 
 			} else if (button.classList.contains("all-clear")) {
@@ -138,11 +89,14 @@ buttons.forEach((button) => {
 
 					numberB = numberB.toString().slice(0, -1);
 					display.textContent = numberB || "0";
+
 				} else {
 
 					numberA = numberA.toString().slice(0, -1);
 					display.textContent = numberA || "0";
+
 				}
+
 			} else if (button.classList.contains("decimal")) {
 
 				if (!operator) {
@@ -152,11 +106,14 @@ buttons.forEach((button) => {
 						numberA = numberA === "" ? "0." : numberA + ".";
 						display.textContent = numberA;
 					}
+
 				} else {
 
 					if (!numberB.includes(".")) {
+
 						numberB = numberB === "" ? "0." : numberB + ".";
 						display.textContent = numberB;
+
 					}
 				}
 			}
@@ -165,19 +122,149 @@ buttons.forEach((button) => {
 	});
 });
 
+document.addEventListener("keydown", (e) => {
+
+  const key = e.key;
+
+  if (!isNaN(key)) {
+
+    const btn = [...buttons].find(b => b.textContent === key);
+
+    if (btn) btn.click();
+
+  }
+
+  if (key === ".") {
+
+    const btn = document.querySelector(".decimal");
+    btn.click();
+
+  }
+
+  if (key === "+") {
+
+    document.querySelector(".plus").click();
+
+  } else if (key === "-") {
+
+    document.querySelector(".subtract").click();
+
+  } else if (key === "*") {
+
+    document.querySelector(".times").click();
+
+  } else if (key === "/") {
+
+    document.querySelector(".divide").click();
+
+  } else if (key === "^") {
+
+    document.querySelector(".exponent").click();
+
+  } else if (key === "%") {
+
+	document.querySelector(".percent").click();
+
+  }
+
+  if (key === "Enter" || key === "=") {
+
+    e.preventDefault(); 
+
+    document.querySelector(".equals").click();
+
+  }
+
+  if (key === "Backspace") {
+
+    document.querySelector(".backspace").click();
+
+  }
+
+  if (key === "Escape") {
+
+    document.querySelector(".all-clear").click();
+
+  }
+});
+
+
+function add(a, b) {
+	return a + b;
+}
+
+function subtract(a, b) {
+	return a - b;
+}
+
+function divide(a, b) {
+
+	if (a === 0 && b === 0) {
+
+		return "Result is undefined";
+
+	}
+
+	if (b === 0) {
+
+		return "Cannot divide by zero";
+
+	}
+
+	return a / b;
+}
+
+function multiply(a, b) {
+	return a * b;
+}
+
+function returnExponent(a, b) {
+	return Math.pow(a, b);
+}
+
+function returnSqrt(a) {
+	return Math.sqrt(a);
+}
+
+function returnPI() {
+	return Math.PI;
+}
+
+function applyPercent(a) {
+	return a / 100;
+}
+
+function toggleSign(a) {
+	return a * -1;
+}
+
+function roundToTwoDecimals(result) {
+	return parseFloat(result.toFixed(2));
+}
+
+function operate(a, b, calculate) {
+	return calculate(a, b);
+}
+
 function displayNumberA(value) {
 
 	if (numberA.length >= 13) return;
+
 	numberA += value;
+
 	display.textContent = formatDisplayString(numberA);
+
 	shrinkDisplay(numberA);
 }
 
 function displayNumberB(value) {
 
 	if (numberB.length >= 13) return;
+
 	numberB += value;
+
 	display.textContent = formatDisplayString(numberB);
+
 	shrinkDisplay(numberB);
 }
 
@@ -206,20 +293,26 @@ function formatDisplay(num) {
 	if (typeof num === "number") {
 
 		const [integerPart, decimalPart] = num.toString().split(".");
+
 		return decimalPart ? integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "." +
 		decimalPart : integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
 	}
+
 	return num;
 }
 
 function formatDisplayString(numStr) {
 
   if (numStr === "") return "0";
+
   if (numStr.includes(".")) {
     const [integerPart, decimalPart] = numStr.split(".");
     return integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "." + decimalPart;
   }
+
   return numStr.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
 }
 
 function shrinkDisplay(val) {
@@ -227,8 +320,10 @@ function shrinkDisplay(val) {
 	if (val.toString().length > 13) {
 		
 		display.classList.add("shrink");
+
 	} else {
 
 		display.classList.remove("shrink");
+
 	}
 }
